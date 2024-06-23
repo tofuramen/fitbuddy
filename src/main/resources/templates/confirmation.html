@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="stylesheet.css">
+<meta name="viewport" content="width=device-width"/>
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+
+</head>
+
+<div class="banner">
+    <h1>My FitBuddy</h1>
+
+    <a class="homeButton" href="http://localhost:8080/">
+        Home
+    </a>
+
+</div>
+<br><br>
+
+<div class="confirmation">
+
+    The user is confirmed: <span th:text="${user.firstName} + ' ' + ${user.email}" />
+
+    <br><br>
+
+    <span th:text="${user.height} + ' ' + ${user.email}" />
+
+    <br><br>
+
+    <span th:text="${user.weight} + ' ' + ${user.activityLevel}"  />
+
+    <br><br>
+    You are:
+    <span th:text="${user.age}"  /> years old
+
+
+
+</div>
+
+
+<body>
+
+</body>
+</html>

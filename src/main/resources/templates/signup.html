@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="stylesheet.css">
+<meta name="viewport" content="width=device-width"/>
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+
+</head>
+
+<div class="banner">
+    <h1>My FitBuddy</h1>
+
+    <a class="homeButton" href="http://localhost:8080/">
+        Home
+    </a>
+
+</div>
+<br><br>
+
+<style>
+    .error {color:red}
+</style>
+
+<div class="signUp">
+
+    <form class="signup-form" th:action="@{/confirmation}" th:object="${user}" method="POST">
+
+
+        First Name: <input type="text" th:field="*{firstName}" />
+        <span th:if="${#fields.hasErrors('firstName')}"
+              th:errors="*{firstName}"
+              class="error"></span>
+        <br><br>
+
+        Username:  <input type="text" th:field="*{userName}" />
+        <span th:if="${#fields.hasErrors('userName')}"
+              th:errors="*{userName}"
+              class="error"></span>
+        <br><br>
+
+        Email:     <input type="text" th:field="*{email}" />
+        <span th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}"
+              class="error"></span>
+        <br><br>
+
+        Age:       <input type="text" th:field="*{age}" />
+        <span th:if="${#fields.hasErrors('age')}"
+              th:errors="*{age}"
+              class="error"></span>
+        <br><br>
+
+        Height in Inches:       <input type="text" th:field="*{height}" />
+        <span th:if="${#fields.hasErrors('height')}"
+              th:errors="*{height}"
+              class="error"></span>
+        <br><br>
+
+        Weight in pounds:       <input type="text" th:field="*{weight}" />
+        <span th:if="${#fields.hasErrors('weight')}"
+              th:errors="*{weight}"
+              class="error"></span>
+        <br><br>
+
+        Sex:
+
+        <select th:field="*{gender}">
+            <option th:value="male">Male</option>
+            <option th:value="female">Female</option>
+        </select>
+
+        <span th:if="${#fields.hasErrors('gender')}"
+              th:errors="*{gender}"
+              class="error"></span>
+
+        <br><br>
+
+        <span th:if="${#fields.hasErrors('activityLevel')}"
+              th:errors="*{activityLevel}"
+              class="error"></span>
+
+        Activity Level:
+
+        <select th:field="*{activityLevel}">
+            <option th:value="sedentary">sedentary</option>
+            <option th:value="lightly-active">lightly active</option>
+            <option th:value="moderately-active">moderately active</option>
+            <option th:value="very-active">very active</option>
+        </select>
+
+
+        <input type="submit" value="Submit" />
+
+    </form>
+
+
+
+</div>
+
+<body>
+
+</body>
+</html>
