@@ -11,38 +11,48 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
+    @SequenceGenerator(name = "user_gen",
+            sequenceName = "users_seq", allocationSize = 1)
     private Integer id;
 
     @NotNull(message="Name is required")
     @Size(min=2, message="is required")
+    @Column(name = "firstname")
     private String firstName;
 
     @Size(message = "Username should be at least 5 characters")
     @NotNull(message="Username is required")
+    @Column(name = "username")
     private String userName;
 
     @NotNull(message="Please enter a valid email address.")
     @Email(message = "Not a valid email", regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
             flags = Pattern.Flag.CASE_INSENSITIVE)
+    @Column(name = "email")
     private String email;
 
     @Min(16)
     @NotNull(message = "Please enter an age above 16.")
+    @Column(name = "age")
     private int age;
 
     @Min(24)
     @NotNull(message = "Please enter a height above 24 inches.")
+    @Column(name = "height")
     private int height;
 
     @NotNull(message = "You must select a gender for calorie assignment")
+    @Column(name = "gender")
     private String gender;
 
     @NotNull(message = "Are you so lazy, you don't even wanna pick activity level?")
+    @Column(name = "activitylevel")
     private String activityLevel;
 
     @Min(85)
     @NotNull(message = "You need to enter a weight above 85 pounds.")
+    @Column(name="weight")
     private int weight;
 
     @ManyToMany

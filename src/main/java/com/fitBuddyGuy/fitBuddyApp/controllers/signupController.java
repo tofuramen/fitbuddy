@@ -36,7 +36,6 @@ public class signupController  {
     public String signup(Model theModel) {
 
         User theUser = new User();
-
         theModel.addAttribute("user", theUser);
 
         return "signup";
@@ -51,7 +50,8 @@ public class signupController  {
             return "signup";
         } else {
 
-            //userService.save(theUser);
+            userService.save(theUser);
+
 
             return "confirmation";
         }
