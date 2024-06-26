@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="stylesheet.css">
+<link rel="stylesheet" href="css/stylesheet.css" th:href="@{/css/stylesheet.css}" type="text/css">
 <meta name="viewport" content="width=device-width"/>
 <head>
     <meta charset="UTF-8">
@@ -36,6 +36,12 @@
         Username:  <input type="text" th:field="*{userName}"  />
         <span th:if="${#fields.hasErrors('userName')}"
               th:errors="*{userName}"
+              class="error"></span>
+        <br><br>
+
+        Password:  <input type="password" th:field="*{password}"  />
+        <span th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}"
               class="error"></span>
         <br><br>
 

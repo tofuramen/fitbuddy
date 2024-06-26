@@ -16,21 +16,32 @@ public class User {
             sequenceName = "users_seq", allocationSize = 1)
     private Integer id;
 
-    @NotNull(message="Name is required")
-    @Size(min=2, message="is required")
+    @NotNull(message = "Name is required")
+    @Size(min = 2, message = "is required")
     @Column(name = "firstname")
     private String firstName;
 
     @Size(message = "Username should be at least 5 characters")
-    @NotNull(message="Username is required")
+    @NotNull(message = "Username is required")
     @Column(name = "username")
     private String userName;
 
-    @NotNull(message="Please enter a valid email address.")
+    @NotNull(message = "Please enter a valid email address.")
     @Email(message = "Not a valid email", regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
             flags = Pattern.Flag.CASE_INSENSITIVE)
     @Column(name = "email")
     private String email;
+
+    @NotNull
+    @Column(name = "password")
+    private String password;
+
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "users",
+//            joinColumns = @JoinColumn(name = "user_role", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_role"))
+//    private ArrayList<BeanDefinitionDsl.Role> roles = new ArrayList<>();
 
     @Min(16)
     @NotNull(message = "Please enter an age above 16.")
@@ -52,7 +63,7 @@ public class User {
 
     @Min(85)
     @NotNull(message = "You need to enter a weight above 85 pounds.")
-    @Column(name="weight")
+    @Column(name = "weight")
     private int weight;
 
     @ManyToMany
@@ -157,4 +168,13 @@ public class User {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

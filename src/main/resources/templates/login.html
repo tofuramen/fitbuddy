@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="stylesheet.css">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<link rel="stylesheet" href="css/stylesheet.css" th:href="@{/css/stylesheet.css}" type="text/css">
 <meta name="viewport" content="width=device-width"/>
 <head>
     <meta charset="UTF-8">
@@ -22,10 +22,25 @@
 </div>
 
 <div class="login">
-    hello
+
+    <form class= "login-form" th:action="@{/login}" th:object="${user}" method="POST">
+
+            Username: <input type="text" name="username">
+            <br><br>
+
+            Password: <input type="password" name="password">
+
+            <button type="submit"> Log in </button>
+
+    </form>
+
+
+
 </div>
 
 <body>
 
 </body>
+
+
 </html>

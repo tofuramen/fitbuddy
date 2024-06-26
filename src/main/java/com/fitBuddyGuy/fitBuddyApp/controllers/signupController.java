@@ -3,7 +3,9 @@ package com.fitBuddyGuy.fitBuddyApp.controllers;
 import com.fitBuddyGuy.fitBuddyApp.model.User;
 import com.fitBuddyGuy.fitBuddyApp.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,8 @@ public class signupController  {
 
 
     private final UserService userService;
+    @Autowired
+    private static BCryptPasswordEncoder passwordEncoder;
 
     public signupController(UserService userService) {
         this.userService = userService;
@@ -49,9 +53,7 @@ public class signupController  {
         if (bindingResult.hasErrors()) {
             return "signup";
         } else {
-
             userService.save(theUser);
-
 
             return "confirmation";
         }
