@@ -42,6 +42,7 @@ public class signupController  {
         User theUser = new User();
         theModel.addAttribute("user", theUser);
 
+
         return "signup";
     }
 

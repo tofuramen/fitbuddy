@@ -3,12 +3,15 @@ package com.fitBuddyGuy.fitBuddyApp.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "users")
 public class User {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
@@ -24,7 +27,7 @@ public class User {
     @Size(message = "Username should be at least 5 characters")
     @NotNull(message = "Username is required")
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     @NotNull(message = "Please enter a valid email address.")
     @Email(message = "Not a valid email", regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
@@ -36,12 +39,18 @@ public class User {
     @Column(name = "password")
     private String password;
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "users",
-//            joinColumns = @JoinColumn(name = "user_role", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_role"))
-//    private ArrayList<BeanDefinitionDsl.Role> roles = new ArrayList<>();
+    public Set<User> getFriendsList() {
+        return friendsList;
+    }
+
+    public void setFriendsList(Set<User> friendsList) {
+        this.friendsList = friendsList;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
+
 
     @Min(16)
     @NotNull(message = "Please enter an age above 16.")
@@ -65,6 +74,7 @@ public class User {
     @NotNull(message = "You need to enter a weight above 85 pounds.")
     @Column(name = "weight")
     private int weight;
+
 
     @ManyToMany
     @JoinTable(
@@ -103,12 +113,13 @@ public class User {
 
     }
 
-    public String getUserName() {
-        return userName;
+
+    public String getusername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setusername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -177,4 +188,12 @@ public class User {
         this.password = password;
     }
 
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
 }

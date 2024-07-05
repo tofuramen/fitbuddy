@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class UserService  {
 
@@ -23,17 +24,11 @@ public class UserService  {
 
     public void save(User theUser) {
 
-        String encodedPassword = this.passwordEncoder.encode(theUser.getPassword());  //the user service hashes the password
+        String encodedPassword = this.passwordEncoder.encode(theUser.getPassword());//the user service hashes the password
         theUser.setPassword(encodedPassword);
 
         userRepository.save(theUser);
     }
-
-
-
-
-
-
 
 
 
