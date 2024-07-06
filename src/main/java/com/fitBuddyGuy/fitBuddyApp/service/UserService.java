@@ -1,5 +1,6 @@
 package com.fitBuddyGuy.fitBuddyApp.service;
 
+import com.fitBuddyGuy.fitBuddyApp.model.Role;
 import com.fitBuddyGuy.fitBuddyApp.model.User;
 import com.fitBuddyGuy.fitBuddyApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class UserService  {
 
         String encodedPassword = this.passwordEncoder.encode(theUser.getPassword());//the user service hashes the password
         theUser.setPassword(encodedPassword);
+        theUser.setRole(Role.USER);
 
         userRepository.save(theUser);
     }

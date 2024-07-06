@@ -2,15 +2,17 @@ package com.fitBuddyGuy.fitBuddyApp.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
 
     @Id
@@ -39,19 +41,6 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    public Set<User> getFriendsList() {
-        return friendsList;
-    }
-
-    public void setFriendsList(Set<User> friendsList) {
-        this.friendsList = friendsList;
-    }
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Collection<Role> roles;
-
-
     @Min(16)
     @NotNull(message = "Please enter an age above 16.")
     @Column(name = "age")
@@ -75,14 +64,8 @@ public class User {
     @Column(name = "weight")
     private int weight;
 
-
-    @ManyToMany
-    @JoinTable(
-            name = "friends_list",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
-    )
-    private Set<User> friendsList = new HashSet<>();
+    @Column(name="user_role")
+    private Role role;
 
     public String getGender() {
         return gender;
@@ -112,7 +95,6 @@ public class User {
     public User() {
 
     }
-
 
     public String getusername() {
         return username;
@@ -180,20 +162,43 @@ public class User {
         this.age = age;
     }
 
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-
-    public Collection<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
