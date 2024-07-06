@@ -3,15 +3,20 @@ package com.fitBuddyGuy.fitBuddyApp.config;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 @EnableWebSecurity // have to add or it can't find HttpSecurity type
 @Configuration
 public class SecurityConfig {
-
 
 
     @Bean
@@ -25,15 +30,17 @@ public class SecurityConfig {
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/css/**").permitAll()
-                )
-
-                .formLogin(form ->
-                        form
-                                .loginPage("/login")
-                                .usernameParameter("username").passwordParameter("password")
-                                .loginProcessingUrl("/login")
+                        .requestMatchers("/processlogin").hasAnyAuthority("USER")
+                );
+                http
+                .securityContext((securityContext) -> securityContext
+                        .securityContextRepository(new HttpSessionSecurityContextRepository())
+                );
+                http.formLogin(authz ->
+                        authz
+                                .loginPage("/login").permitAll()
                                 .defaultSuccessUrl("/login_success")
-                                .permitAll()
+
 
                 )
                 .logout(l -> l
@@ -45,6 +52,23 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(CustomUserDetailsService customUserDetailsService, PasswordEncoder passwordEncoder) {
+
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(customUserDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+        ProviderManager providerManager = new ProviderManager(authenticationProvider);
+        providerManager.setEraseCredentialsAfterAuthentication(false);
+
+        return providerManager;
+    }
 
 
 
