@@ -64,7 +64,9 @@ public class User implements UserDetails {
     @Column(name = "weight")
     private int weight;
 
+
     @Column(name="user_role")
+    @Enumerated
     private Role role;
 
     public String getGender() {

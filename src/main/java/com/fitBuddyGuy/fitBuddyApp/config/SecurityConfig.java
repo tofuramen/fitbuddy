@@ -6,13 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 @EnableWebSecurity // have to add or it can't find HttpSecurity type
 @Configuration
@@ -23,23 +21,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf(Customizer.withDefaults())
+                .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/", "/home", "/confirmation").permitAll()
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/css/**").permitAll()
-                        .requestMatchers("/processlogin").hasAnyAuthority("USER")
-                );
-                http
-                .securityContext((securityContext) -> securityContext
-                        .securityContextRepository(new HttpSessionSecurityContextRepository())
-                );
-                http.formLogin(authz ->
-                        authz
-                                .loginPage("/login").permitAll()
-                                .defaultSuccessUrl("/login_success")
+                )
+
+                .formLogin(form->
+                        form
+                                .loginPage("/login")
+                                .loginProcessingUrl("/processlogin")
+                                .permitAll()
 
 
                 )
