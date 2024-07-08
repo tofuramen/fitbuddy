@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <link rel="stylesheet" href="css/stylesheet.css" th:href="@{/css/stylesheet.css}" type="text/css">
 <meta name="viewport" content="width=device-width"/>
 <head>
@@ -15,17 +15,40 @@
         Home
     </a>
 
-    <a class="signout" href="http://localhost:8080/">
-        Home
+    <a class="signout_profile" href="http://localhost:8080/" th:action="@{/logout}">
+
+        Sign Out
     </a>
 
 </div>
 
-<div>
+<div class="profile_picture_grid">
+
+    Profile : <a th:text="${user.username}"></a>
+
+
+    <div class="profile_picture">
+
+        Hey
+    </div>
+
 
 
 
 </div>
+
+
+<div class="user_info">
+
+
+
+
+
+
+</div>
+
+
+
 
 
 <body>

@@ -28,12 +28,14 @@ public class SecurityConfig {
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/profile").permitAll()
                 )
 
                 .formLogin(form->
                         form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/processlogin")
+                                .defaultSuccessUrl("/profile")
                                 .permitAll()
 
 
