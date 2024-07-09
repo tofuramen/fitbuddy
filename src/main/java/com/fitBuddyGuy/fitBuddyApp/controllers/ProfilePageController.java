@@ -1,6 +1,7 @@
 package com.fitBuddyGuy.fitBuddyApp.controllers;
 
 import com.fitBuddyGuy.fitBuddyApp.repository.UserRepository;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import java.security.Principal;
 public class ProfilePageController {
 
     UserRepository userRepository;
+    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
     public ProfilePageController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -24,10 +26,6 @@ public class ProfilePageController {
 
         return "userprofile";
     }
-
-
-
-
 
 
 

@@ -11,9 +11,6 @@
 <div class="banner">
     <h1>My FitBuddy</h1>
 
-    <a class="homeButton" href="http://localhost:8080/">
-        Home
-    </a>
 
     <a class="signout_profile" href="http://localhost:8080/" th:action="@{/logout}">
 
@@ -25,12 +22,30 @@
 <div class="profile_picture_grid">
 
     Profile : <a th:text="${user.username}"></a>
+    <br>
+    Current Weight: <a th:text="${user.weight}"></a> lbs
+    <br>
+    Current Height : <a th:text="${user.height}"></a> inches.
 
+    <br>
+    <br>
 
-    <div class="profile_picture">
+    <div class="container">
 
-        Hey
+        <div class="block"></div>
     </div>
+
+    <p>
+
+        User Bio: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+        ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived
+        not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
+        with the release of Letraset sheets containing Lorem Ipsum passages,
+        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+
+    </p>
+
+
 
 
 
@@ -38,9 +53,10 @@
 </div>
 
 
+
 <div class="user_info">
 
-
+ Hey
 
 
 

@@ -121,11 +121,19 @@ a.homeButton {
     color: black;
     background-color: lightgrey;
     padding: 85px 32px;
-    text-align: center;
+    text-align: left;
 
-    .profile_picture {
+    .block {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+        background-color: white;
+    }
+
+    .container {
         text-align: center;
     }
+
 
 }
 
