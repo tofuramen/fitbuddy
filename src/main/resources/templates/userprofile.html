@@ -45,22 +45,36 @@
 
     </p>
 
-
-
-
-
-
 </div>
 
-
-
 <div class="user_info">
+ <div class="nutrition-box">
 
- Hey
+     Total Calories: <a th:text="${nutrition.getTotal_calories()}"></a>
+     Total Carbs: <a th:text="${nutrition.getCarbs()}"></a>
+     Total protein:     <a th:text="${nutrition.getProtein()}"></a>
+     Total fat:       <a th:text="${nutrition.getFat()}"></a>
+
+     <form class="meals" th:action="@{/postMeal}" th:object="${nutrition}" th:value="meal" method="POST">
+
+         <br><br>
+         Add a Meal:
+
+         Total Calories:       <input type="text" th:field="*{total_calories}" />
+         <br><br>
+         Carbs :                <input type="text" th:field="*{carbs}" />
+         <br><br>
+         Protein:               <input type="text" th:field="*{protein}" />
+         <br><br>
+         Fat:                   <input type="text" th:field="*{fat}" />
+
+         <br><br>
+         <input type="submit" value="Submit" />
 
 
+     </form>
 
-
+ </div>
 </div>
 
 

@@ -133,8 +133,14 @@ a.homeButton {
     .container {
         text-align: center;
     }
+}
 
-
+.user_info {
+    height: 400px;
+    padding: 10px;
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
 }
 
 
