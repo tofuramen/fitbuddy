@@ -1,55 +1,62 @@
 package com.fitBuddyGuy.fitBuddyApp.controllers;
 
 import com.fitBuddyGuy.fitBuddyApp.model.Nutrition;
-import com.fitBuddyGuy.fitBuddyApp.repository.NutritionRepository;
+import com.fitBuddyGuy.fitBuddyApp.model.User;
 import com.fitBuddyGuy.fitBuddyApp.repository.UserRepository;
 import com.fitBuddyGuy.fitBuddyApp.service.dietServiceImpl;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 
 @Controller
 public class ProfilePageController {
 
-    private final NutritionRepository nutritionRepository;
-    private Nutrition nutrition = new Nutrition();
+
+    private final dietServiceImpl dietService;
     private final UserRepository userRepository;
-    private dietServiceImpl dietServiceImpl;
-    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
-    public ProfilePageController(UserRepository userRepository, NutritionRepository nutritionRepository,
-                                 dietServiceImpl dietServiceImpl) {
+
+    public ProfilePageController(dietServiceImpl dietService, UserRepository userRepository) {
+        this.dietService = dietService;
         this.userRepository = userRepository;
-        this.nutritionRepository = nutritionRepository;
     }
 
-    @RequestMapping(value ="/profile")
-    public String profile(Model model, Principal principal) {
+    @RequestMapping(value ="/profile", method = RequestMethod.GET)
+    public String profile(Model model, Principal principal, Nutrition nutrition) {
         String username = principal.getName();
+        User user = userRepository.findByUsername(username);
+        LocalDate localDate = LocalDate.now();
 
-        model.addAttribute(userRepository.findByUsername(username));
-        model.addAttribute(nutritionRepository);
+
+        model.addAttribute(user);
+        model.addAttribute(localDate);
+
         model.addAttribute(nutrition);
+
 
         return "userprofile";
     }
 
-    @PostMapping(value = "profile")
-    public String postMeal(Model model) {
+    @RequestMapping(value = "profile", method = RequestMethod.POST)
+    public String profile(@Valid @ModelAttribute("nutrition") Nutrition nutrition,
+                           BindingResult bindingResult, Principal principal) {
 
-        model.addAttribute(nutrition);
+        if (bindingResult.hasErrors()) {
+            return "profile";
+        } else {
+
+        dietService.save(nutrition, principal);
 
 
-
-
-
-
-        return "userprofile";
+        return  "redirect:/profile"; }
     }
 
 

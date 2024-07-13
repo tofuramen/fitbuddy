@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+
 @Table(name = "nutritiontracker")
 @Entity
 public class Nutrition {
@@ -18,7 +20,7 @@ public class Nutrition {
     private int user_id;
 
     @Column(name="entry_date")
-    private int entry_date;
+    private LocalDateTime entry_date;
 
 
     @Column(name="carbs")
@@ -34,7 +36,7 @@ public class Nutrition {
     @Column(name="total_calories")
     private int total_calories;
 
-    public Nutrition(int user_id, int entry_date, int carbs, int fat, int protein, int total_calories) {
+    public Nutrition(int user_id, LocalDateTime entry_date, int carbs, int fat, int protein, int total_calories) {
         this.user_id = user_id;
         this.entry_date = entry_date;
         this.carbs = carbs;
@@ -59,16 +61,20 @@ public class Nutrition {
         this.user_id = user_id;
     }
 
+    public int getUser_id() {
+        return this.user_id;
+    }
+
     public int user_id() {
         return this.user_id;
     }
 
 
-    public int getEntry_date() {
+    public LocalDateTime getEntry_date() {
         return entry_date;
     }
 
-    public void setEntry_date(int entry_date) {
+    public void setEntry_date(LocalDateTime entry_date) {
         this.entry_date = entry_date;
     }
 

@@ -49,16 +49,19 @@
 
 <div class="user_info">
  <div class="nutrition-box">
-
+     Today's Date: <a th:text="${localDate}"></a>
+     <br><br>
      Total Calories: <a th:text="${nutrition.getTotal_calories()}"></a>
      Total Carbs: <a th:text="${nutrition.getCarbs()}"></a>
      Total protein:     <a th:text="${nutrition.getProtein()}"></a>
      Total fat:       <a th:text="${nutrition.getFat()}"></a>
 
-     <form class="meals" th:action="@{/postMeal}" th:object="${nutrition}" th:value="meal" method="POST">
+     <form class="meals" th:action="@{/profile}" th:object="${nutrition}"  method="POST">
 
          <br><br>
          Add a Meal:
+         <br><br>
+
 
          Total Calories:       <input type="text" th:field="*{total_calories}" />
          <br><br>

@@ -138,7 +138,6 @@ public class User implements UserDetails {
         this.firstName = firstName;
     }
 
-
     public void setActivityLevel(@NotNull(message = "Are you so lazy, you don't even wanna pick activity level?") String activityLevel) {
         this.activityLevel = activityLevel;
     }
