@@ -1,9 +1,6 @@
 package com.fitBuddyGuy.fitBuddyApp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -13,6 +10,9 @@ import java.time.LocalDateTime;
 public class Nutrition {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nutrition_gen")
+    @SequenceGenerator(name = "nutrition_gen",
+            sequenceName = "nutritiontracker_seq", allocationSize = 1)
     private int nutrition_id;
 
 
