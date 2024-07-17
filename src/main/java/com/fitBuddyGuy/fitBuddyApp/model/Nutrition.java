@@ -17,10 +17,10 @@ public class Nutrition {
 
 
     @Column(name = "user_id")
-    private int user_id;
+    private int userID;
 
     @Column(name="entry_date")
-    private LocalDateTime entry_date;
+    private LocalDateTime entryDate;
 
 
     @Column(name="carbs")
@@ -32,13 +32,16 @@ public class Nutrition {
     @Column(name="fat")
     private int fat;
 
+    @Column(name="current_weight")
+    private int weight;
+
     @NotNull(message = "calories are required.")
     @Column(name="total_calories")
     private int total_calories;
 
-    public Nutrition(int user_id, LocalDateTime entry_date, int carbs, int fat, int protein, int total_calories) {
-        this.user_id = user_id;
-        this.entry_date = entry_date;
+    public Nutrition(int userID, LocalDateTime entryDate, int carbs, int fat, int protein, int total_calories) {
+        this.userID = userID;
+        this.entryDate = entryDate;
         this.carbs = carbs;
         this.fat = fat;
         this.protein = protein;
@@ -57,25 +60,25 @@ public class Nutrition {
         return nutrition_id;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser_id(int userID) {
+        this.userID = userID;
     }
 
     public int getUser_id() {
-        return this.user_id;
+        return this.userID;
     }
 
     public int user_id() {
-        return this.user_id;
+        return this.userID;
     }
 
 
     public LocalDateTime getEntry_date() {
-        return entry_date;
+        return entryDate;
     }
 
     public void setEntry_date(LocalDateTime entry_date) {
-        this.entry_date = entry_date;
+        this.entryDate = entry_date;
     }
 
     public int getCarbs() {
@@ -115,5 +118,13 @@ public class Nutrition {
         setCarbs(getCarbs() + carbs);
         setFat(getFat() + fat);
         setTotal_calories(getTotal_calories() + mealCalories);
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 }
