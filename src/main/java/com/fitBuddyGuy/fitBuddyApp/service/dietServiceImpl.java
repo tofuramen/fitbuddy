@@ -73,6 +73,57 @@ public class dietServiceImpl  {
 
     }
 
+    //this will be the method that allows you to edit the user's profile
+    public void editProfile(Principal principal) {
+
+    }
+
+    //this method will generate the user's calorie target
+    public double getBMR(Principal principal) {
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username);
+        double weight = user.getWeight() * 0.45359237; //converting weight in KG
+        double height = user.getHeight() * 2.54; //converting height to cm
+        String activityLevel = user.getActivityLevel();
+        String gender = user.getGender();
+        int age = user.getAge();
+        double bmr = 0;
+
+        if (activityLevel.equals("sedentary") && gender.equals("male")) {
+            bmr = 10 * weight + 6.25 * height - 5 * age + 5 * 1.2;
+        }
+
+        if (activityLevel.equals("lightly-active") && gender.equals("male")) {
+            bmr = 10 * weight + 6.25 * height - 5 * age + 5 * 1.375;
+        }
+
+        if (activityLevel.equals("moderately-active") && gender.equals("male")) {
+            bmr = 10 * weight + 6.25 * height - 5 * age + 5 * 1.55;
+        }
+
+        if (activityLevel.equals("very-active") && gender.equals("male")) {
+            bmr = 10 * weight + 6.25 * height - 5 * age + 5 * 1.725;
+        }
+
+        if (activityLevel.equals("sedentary") && gender.equals("female")) {
+            bmr = 10 * weight + 6.25 * height - 5 * age - 161 * 1.2;
+        }
+
+        if (activityLevel.equals("lightly-active") && gender.equals("female")) {
+            bmr = 10 * weight + 6.25 * height - 5 * age - 161 * 1.375;
+        }
+
+        if (activityLevel.equals("moderately-active") && gender.equals("female")) {
+            bmr = 10 * weight + 6.25 * height - 5 * age - 161 * 1.55;
+        }
+
+        if (activityLevel.equals("very-active") && gender.equals("female")) {
+            bmr = 10 * weight + 6.25 * height - 5 * age - 161 * 1.725;
+        }
+
+        return bmr;
+    }
+
 
 
 }

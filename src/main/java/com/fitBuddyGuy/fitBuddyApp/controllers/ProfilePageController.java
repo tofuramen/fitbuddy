@@ -40,14 +40,14 @@ public class ProfilePageController {
         int id = user.getId();
         LocalDate date = LocalDate.now();
         LocalDateTime time = LocalDateTime.now();
-
+        int bmr = (int) dietService.getBMR(principal);
         Nutrition nutritionProfile = nutritionRepository.findByEntryDateAndUserID(time, id);
 
         model.addAttribute(user);
         model.addAttribute(date);
 
         model.addAttribute(nutrition);
-
+        model.addAttribute("bmr", bmr);
         model.addAttribute("nutritionProfile", nutritionProfile);
 
 
@@ -60,7 +60,7 @@ public class ProfilePageController {
                            BindingResult bindingResult, Principal principal) {
 
         if (bindingResult.hasErrors()) {
-            return "profile";
+            return "userprofile";
         }
 
 
@@ -83,6 +83,11 @@ public class ProfilePageController {
         }
 
         return  "redirect:/profile";
+    }
+
+    @RequestMapping("/editprofile")
+    public String editProfile() {
+        return "redirect:/editprofile";
     }
 
 
