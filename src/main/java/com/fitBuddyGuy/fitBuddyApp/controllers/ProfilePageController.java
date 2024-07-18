@@ -47,7 +47,10 @@ public class ProfilePageController {
         model.addAttribute(date);
 
         model.addAttribute(nutrition);
+
         model.addAttribute("nutritionProfile", nutritionProfile);
+
+
 
         return "userprofile";
     }

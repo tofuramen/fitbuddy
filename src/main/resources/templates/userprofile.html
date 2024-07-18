@@ -49,12 +49,17 @@
 
 <div class="user_info">
  <div class="nutrition-box">
-     Today's Date: <a th:text="${localDate}"></a>
+     Today's Date: <a th:text="${localDate}" ></a>
      <br><br>
-         Total Calories: <a th:text="${nutritionProfile.getTotal_calories()}"></a>
-         Total Carbs: <a th:text="${nutritionProfile.getCarbs()}"></a>
-         Total protein:     <a th:text="${nutritionProfile.getProtein()}"></a>
-         Total fat:       <a th:text="${nutritionProfile.getFat()}"></a>
+
+         Total Calories: <span  th:if="${nutritionProfile != null}"
+                            th:object="${nutritionProfile.getTotal_calories()}"> </span>
+         Total Carbs: <a th:text="${nutritionProfile != null} ?
+        ${nutritionProfile.getCarbs()}"></a>
+         Total protein:     <a th:text="${nutritionProfile != null} ?
+        ${nutritionProfile.getProtein()}"></a>
+         Total fat:       <a th:text="${nutritionProfile != null} ?
+        ${nutritionProfile.getFat()}"></a>
 
 
 
