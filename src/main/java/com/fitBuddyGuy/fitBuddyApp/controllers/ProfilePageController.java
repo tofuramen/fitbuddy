@@ -4,14 +4,14 @@ import com.fitBuddyGuy.fitBuddyApp.model.Nutrition;
 import com.fitBuddyGuy.fitBuddyApp.model.User;
 import com.fitBuddyGuy.fitBuddyApp.repository.NutritionRepository;
 import com.fitBuddyGuy.fitBuddyApp.repository.UserRepository;
+import com.fitBuddyGuy.fitBuddyApp.service.UserService;
 import com.fitBuddyGuy.fitBuddyApp.service.dietServiceImpl;
+import dto.UserDAO;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -25,12 +25,13 @@ public class ProfilePageController {
     private final dietServiceImpl dietService;
     private final UserRepository userRepository;
     private final NutritionRepository nutritionRepository;
+    private final UserService userService;
 
-
-    public ProfilePageController(dietServiceImpl dietService, UserRepository userRepository, NutritionRepository nutritionRepository) {
+    public ProfilePageController(dietServiceImpl dietService, UserRepository userRepository, NutritionRepository nutritionRepository, UserService userService) {
         this.dietService = dietService;
         this.userRepository = userRepository;
         this.nutritionRepository = nutritionRepository;
+        this.userService = userService;
     }
 
     @RequestMapping(value ="/profile", method = RequestMethod.GET)
@@ -85,11 +86,41 @@ public class ProfilePageController {
         return  "redirect:/profile";
     }
 
-    @RequestMapping("/editprofile")
-    public String editProfile() {
-        return "redirect:/editprofile";
+    @GetMapping( "/profile/editprofile")
+    public String editProfile(Model model, Principal principal) {
+
+        String username = principal.getName();
+        User editUser = userRepository.findByUsername(username);
+        UserDAO user = new UserDAO();
+
+
+        model.addAttribute("userDAO", user);
+        model.addAttribute("editUser", editUser);
+
+        return "editprofile";
     }
 
+
+
+    @PostMapping("/profile/editprofile")
+    public String updateUserInformation(@Valid @ModelAttribute("userDAO") UserDAO user,
+                                        BindingResult result, Principal principal, @ModelAttribute("editUser")
+                                            User editUser) {
+
+
+
+        if (result.hasErrors()) {
+            throw new RuntimeException("form is not validating.");
+        }
+
+        else {
+            user.setUsername(principal.getName());
+            userService.updateUserInformation(user);
+
+            return "editprofile";
+        }
+
+    }
 
 
 

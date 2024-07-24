@@ -30,7 +30,8 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/profile").permitAll()
-                        .requestMatchers("/editprofile").permitAll()
+                        .requestMatchers("/profile/editprofile").permitAll()
+                        .requestMatchers("/profile/editprofile").permitAll()
 
 
                 )

@@ -124,6 +124,35 @@ public class dietServiceImpl  {
         return bmr;
     }
 
+    public int getCalorieGoal(int bmr, String userGoal) {
+
+        double calorieGoal = 0;
+        double maintenance = bmr *1.2;
+
+        if (userGoal.equals("maintain")) {
+            calorieGoal = maintenance;
+        }
+
+        if (userGoal.equals("easyLoss")) {
+            calorieGoal = maintenance - 250;
+        }
+
+        if(userGoal.equals("normalLoss")) {
+            calorieGoal = maintenance - 500;
+        }
+
+        if (userGoal.equals("aggressiveLoss")) {
+            calorieGoal = maintenance - 1000;
+        }
+
+        if(userGoal.equals("gainWeight")) {
+            calorieGoal = maintenance + 500;
+        }
+
+
+        return (int) calorieGoal;
+    }
+
 
 
 }

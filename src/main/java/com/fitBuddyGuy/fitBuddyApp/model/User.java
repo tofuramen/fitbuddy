@@ -23,18 +23,21 @@ public class User implements UserDetails {
 
     @NotNull(message = "Name is required")
     @Size(min = 2, message = "is required")
-    @Column(name = "firstname")
+    @Column(name = "firstname", updatable = false)
     private String firstName;
 
     @Size(message = "Username should be at least 5 characters")
     @NotNull(message = "Username is required")
-    @Column(name = "username")
+    @Column(name = "username", updatable = false)
     private String username;
+
+    @Column(name="user_goal")
+    private String user_goal;
 
     @NotNull(message = "Please enter a valid email address.")
     @Email(message = "Not a valid email", regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
             flags = Pattern.Flag.CASE_INSENSITIVE)
-    @Column(name = "email")
+    @Column(name = "email", updatable = false)
     private String email;
 
     @NotNull
@@ -48,11 +51,11 @@ public class User implements UserDetails {
 
     @Min(24)
     @NotNull(message = "Please enter a height above 24 inches.")
-    @Column(name = "height")
+    @Column(name = "height", updatable = false)
     private int height;
 
     @NotNull(message = "You must select a gender for calorie assignment")
-    @Column(name = "gender")
+    @Column(name = "gender", updatable = false)
     private String gender;
 
     @NotNull(message = "Are you so lazy, you don't even wanna pick activity level?")
@@ -64,7 +67,7 @@ public class User implements UserDetails {
     @Column(name = "weight")
     private int weight;
 
-    @Column(name="user_role")
+    @Column(name="user_role", updatable = false)
     @Enumerated
     private Role role;
 
@@ -95,6 +98,14 @@ public class User implements UserDetails {
 
     public User() {
 
+    }
+
+    public User(String username, int weight, String activityLevel, String user_goal, int age) {
+        this.username = username;
+        this.age =age;
+        this.activityLevel = activityLevel;
+        this.user_goal =user_goal;
+        this.weight = weight;
     }
 
     public String getusername() {
@@ -200,5 +211,13 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getUser_goal() {
+        return user_goal;
+    }
+
+    public void setUser_goal(String user_goal) {
+        this.user_goal = user_goal;
     }
 }

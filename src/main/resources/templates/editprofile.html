@@ -1,10 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="css/stylesheet.css" th:href="@{/css/stylesheet.css}" type="text/css">
+<meta name="viewport" content="width=device-width"/>
 <head>
-    <meta charset="UTF-8">
     <title>Edit Profile</title>
 </head>
+
+<div class="header">
+    <h1>My FitBuddy</h1>
+
+
+    <a class="homeButton" href="http://localhost:8080/">
+        Home
+    </a>
+
+    <a class="backButton" href="http://localhost:8080/profile">
+        Back
+    </a>
+
+</div>
+
 <body>
 
+<div class="editProfileForm">
+
+User Information:
+
+    <br><br>
+
+
+        <br><br>
+        User's Current Weight:              <a th:text="${editUser.getWeight() != null} ?
+                            ${editUser.getWeight()}"> </a>
+        <br><br>
+        User's Current Age:                 <a th:text="${editUser.getAge() != null} ?
+                            ${editUser.getAge()}"> </a>
+        <br><br>
+        User's Current Activity Level:     <a th:text="${editUser.getActivityLevel() != null} ?
+                            ${editUser.getActivityLevel()}"> </a>
+</div>
+        <br><br>
+
+<div class="update-form">
+        <br><br>
+        Update User Information:
+        <br><br>
+
+        <form class="diet" th:action="@{/profile/editprofile}" th:object="${userDAO}" method="post">
+
+
+            Select a fitness goal:
+            <select  th:field="*{user_goal}">
+                <option th:value="maintain">Maintain Weight</option>
+                <option th:value="easyLoss">Lose Weight Slowly</option>
+                <option th:value="normalLoss">Lose Weight at a good pace</option>
+                <option th:value="aggressiveLoss">Aggressively Lose Weight</option>
+                <option th:value="gainWeight">Gain Weight</option>
+            </select>
+
+            <br><br>
+
+            Change weight: <input type="text" th:field="*{weight}" />
+
+
+            <br><br>
+
+            Change activity level:
+
+            <select th:field="*{activityLevel}">
+                <option th:value="sedentary">sedentary</option>
+                <option th:value="lightly-active">lightly active</option>
+                <option th:value="moderately-active">moderately active</option>
+                <option th:value="very-active">very active</option>
+            </select>
+
+            Change age: <input type="text" th:field="*{age}" />
+                <br><br>
+             <input type="submit" value="Submit" />
+
+
+
+    </form>
+
+
+
+
+</div>
+
+
+
+
 </body>
+
 </html>
