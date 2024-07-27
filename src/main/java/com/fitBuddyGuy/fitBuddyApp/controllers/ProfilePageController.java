@@ -6,8 +6,11 @@ import com.fitBuddyGuy.fitBuddyApp.repository.NutritionRepository;
 import com.fitBuddyGuy.fitBuddyApp.repository.UserRepository;
 import com.fitBuddyGuy.fitBuddyApp.service.UserService;
 import com.fitBuddyGuy.fitBuddyApp.service.dietServiceImpl;
+import dto.PasswordDAO;
 import dto.UserDAO;
 import jakarta.validation.Valid;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,12 +29,16 @@ public class ProfilePageController {
     private final UserRepository userRepository;
     private final NutritionRepository nutritionRepository;
     private final UserService userService;
+    private final PasswordEncoder encoder;
 
-    public ProfilePageController(dietServiceImpl dietService, UserRepository userRepository, NutritionRepository nutritionRepository, UserService userService) {
+    public ProfilePageController(dietServiceImpl dietService, UserRepository userRepository, NutritionRepository nutritionRepository, UserService userService,
+                                 PasswordEncoder encoder) {
+
         this.dietService = dietService;
         this.userRepository = userRepository;
         this.nutritionRepository = nutritionRepository;
         this.userService = userService;
+        this.encoder = new BCryptPasswordEncoder();
     }
 
     @RequestMapping(value ="/profile", method = RequestMethod.GET)
@@ -42,6 +49,10 @@ public class ProfilePageController {
         LocalDate date = LocalDate.now();
         LocalDateTime time = LocalDateTime.now();
         int bmr = (int) dietService.getBMR(principal);
+        if (user.getUser_goal() == null) {
+            user.setUser_goal("maintain");
+        }
+        int target_calories = dietService.getCalorieGoal(bmr, user.getUser_goal());
         Nutrition nutritionProfile = nutritionRepository.findByEntryDateAndUserID(time, id);
 
         model.addAttribute(user);
@@ -49,6 +60,7 @@ public class ProfilePageController {
 
         model.addAttribute(nutrition);
         model.addAttribute("bmr", bmr);
+        model.addAttribute("target_calories", target_calories);
         model.addAttribute("nutritionProfile", nutritionProfile);
 
 
@@ -122,7 +134,37 @@ public class ProfilePageController {
 
     }
 
+    @GetMapping("/profile/changepassword")
+    public String changePassword(Model model, Principal principal) {
 
 
+        String changeSuccessMessage = "Password was changed successfully.";
+        String username = principal.getName();
+        User userPass = userRepository.findByUsername(username);
+        PasswordDAO passwordDAO = new PasswordDAO();
+        model.addAttribute(userPass);
+        model.addAttribute(passwordDAO);
+        model.addAttribute(changeSuccessMessage);
+        return "changePassword";
+    }
+
+    @PostMapping("/profile/changepassword")
+    public String changePassword(@ModelAttribute("passwordDAO") PasswordDAO user,
+                                 @RequestParam("password") String password,
+                                 @RequestParam("oldpassword") String oldPassword,
+                                 @ModelAttribute("currentUser") User userPass, Principal principal) {
+
+        String username = principal.getName();
+        User existingUser = userRepository.findByUsername(username);
+
+
+        if (userService.checkOldPasswordMatches(existingUser, oldPassword)) {
+            userService.changePassword(user, password, existingUser);
+        } else {
+            throw new RuntimeException( oldPassword + " does not match " + existingUser.getPassword());
+        }
+
+        return "changePassword";
+    }
 
 }

@@ -3,6 +3,7 @@ package com.fitBuddyGuy.fitBuddyApp.service;
 import com.fitBuddyGuy.fitBuddyApp.model.Role;
 import com.fitBuddyGuy.fitBuddyApp.model.User;
 import com.fitBuddyGuy.fitBuddyApp.repository.UserRepository;
+import dto.PasswordDAO;
 import dto.UserDAO;
 import jakarta.validation.Valid;
 import org.hibernate.SessionFactory;
@@ -14,19 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class UserService   {
+public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapperImpl userMapper;
-
+    private final UserPasswordMapper passwordMapper;
     private SessionFactory sessionFactory;
 
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository theUserRepository, UserMapperImpl userMapper) {
+    public UserService(UserRepository theUserRepository, UserMapperImpl userMapper, UserPasswordMapper passwordMapper) {
         userRepository = theUserRepository;
         this.userMapper = userMapper;
+        this.passwordMapper = passwordMapper;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -54,11 +56,36 @@ public class UserService   {
 
     }
 
-    public void changePassword(User user) {
+    public void changePassword(PasswordDAO user, String newPassword, User existingUser) {
 
-        String newPassword = this.passwordEncoder.encode(user.getPassword());
+        String password = this.passwordEncoder.encode(newPassword);
+        user.setPassword(password);
 
-        userRepository.save(user);
+        if (existingUser == null) {
+            throw new RuntimeException("existing user does not exist.");
+        }
+
+
+        //passwordMapper.updatePassword(user, existingUser);
+        existingUser.setPassword(password);
+
+        userRepository.save(existingUser);
+    }
+
+    public boolean checkOldPasswordMatches(User user, String oldPassword) {
+
+
+        if (user == null) {
+            throw new RuntimeException("existing user " + user.getUsername() + " does not exist.");
+        }
+
+
+        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+            return true;
+        }
+
+
+        return false;
     }
 
 

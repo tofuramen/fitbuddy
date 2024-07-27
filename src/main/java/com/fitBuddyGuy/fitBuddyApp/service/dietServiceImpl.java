@@ -82,43 +82,45 @@ public class dietServiceImpl  {
     public double getBMR(Principal principal) {
         String username = principal.getName();
         User user = userRepository.findByUsername(username);
-        double weight = user.getWeight() * 0.45359237; //converting weight in KG
-        double height = user.getHeight() * 2.54; //converting height to cm
+        double weight = user.getWeight();
+        double height = user.getHeight();
         String activityLevel = user.getActivityLevel();
         String gender = user.getGender();
         int age = user.getAge();
         double bmr = 0;
+        double female_formula = (4.536 * weight) + (15.88 * height) - (5 * age) - 161;
+        double male_formula = (4.536 * weight) + (15.88 * height) - (5 * age) + 5;
 
         if (activityLevel.equals("sedentary") && gender.equals("male")) {
-            bmr = 10 * weight + 6.25 * height - 5 * age + 5 * 1.2;
+            bmr = male_formula * 1.2;
         }
 
         if (activityLevel.equals("lightly-active") && gender.equals("male")) {
-            bmr = 10 * weight + 6.25 * height - 5 * age + 5 * 1.375;
+            bmr = male_formula * 1.4;
         }
 
         if (activityLevel.equals("moderately-active") && gender.equals("male")) {
-            bmr = 10 * weight + 6.25 * height - 5 * age + 5 * 1.55;
+            bmr = male_formula * 1.6;
         }
 
         if (activityLevel.equals("very-active") && gender.equals("male")) {
-            bmr = 10 * weight + 6.25 * height - 5 * age + 5 * 1.725;
+            bmr = male_formula * 1.8;
         }
 
         if (activityLevel.equals("sedentary") && gender.equals("female")) {
-            bmr = 10 * weight + 6.25 * height - 5 * age - 161 * 1.2;
+            bmr = female_formula * 1.2;
         }
 
         if (activityLevel.equals("lightly-active") && gender.equals("female")) {
-            bmr = 10 * weight + 6.25 * height - 5 * age - 161 * 1.375;
+            bmr = female_formula * 1.4;
         }
 
         if (activityLevel.equals("moderately-active") && gender.equals("female")) {
-            bmr = 10 * weight + 6.25 * height - 5 * age - 161 * 1.55;
+            bmr = female_formula * 1.6;
         }
 
         if (activityLevel.equals("very-active") && gender.equals("female")) {
-            bmr = 10 * weight + 6.25 * height - 5 * age - 161 * 1.725;
+            bmr = female_formula * 1.6;
         }
 
         return bmr;

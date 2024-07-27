@@ -29,7 +29,8 @@
     <br>
     Current BMR: <a th:text="${bmr}"></a> calories.
     <br>
-    Calorie Target:
+    Calorie Target: <a th:text="${user.getUser_goal() != null} ?
+                            ${target_calories}"> </a> calories.
     <br>
 
     <div class="container">
@@ -41,6 +42,16 @@
         <a class="editProfileButton" href="http://localhost:8080/profile/editprofile" th:action="@{/editprofile}">
             <button>Edit User Profile</button>
         </a>
+
+    </div>
+
+    <br>
+
+    <div class="left-block">
+        <a class="changePassButton" href="http://localhost:8080/profile/changepassword" th:action="@{/changepassword}">
+            <button>Change Password</button>
+        </a>
+
     </div>
 
     <p>

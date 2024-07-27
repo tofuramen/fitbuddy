@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/profile").permitAll()
                         .requestMatchers("/profile/editprofile").permitAll()
-                        .requestMatchers("/profile/editprofile").permitAll()
+                        .requestMatchers("/profile/changepassword").permitAll()
 
 
                 )

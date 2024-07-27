@@ -144,8 +144,13 @@ a.homeButton {
 }
 
 .right-block {
-    background-color: coral;
+
     width: 5%;
+}
+
+.left-block {
+    width: 5%;
+
 }
 
 .editProfileForm {

@@ -1,6 +1,7 @@
 package com.fitBuddyGuy.fitBuddyApp.service;
 
 import com.fitBuddyGuy.fitBuddyApp.model.User;
+import dto.PasswordDAO;
 import dto.UserDAO;
 import org.mapstruct.*;
 
@@ -15,7 +16,7 @@ public interface UserMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update(UserDAO from, @MappingTarget User to);
 
-
-
-
+    @Mapping(target = "id", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updatePassword(PasswordDAO from, User to);
 }

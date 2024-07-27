@@ -1,6 +1,7 @@
 package com.fitBuddyGuy.fitBuddyApp.service;
 
 import com.fitBuddyGuy.fitBuddyApp.model.User;
+import dto.PasswordDAO;
 import dto.UserDAO;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,10 @@ public class UserMapperImpl implements UserMapper {
         if (from.getAge() >= 18) {
             to.setAge(from.getAge());
         }
+
+    }
+
+    public void updatePassword(PasswordDAO from, User to) {
 
     }
 }
