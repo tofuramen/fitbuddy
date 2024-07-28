@@ -136,11 +136,11 @@ a.homeButton {
 }
 
 .user_info {
-    height: 400px;
+    height: 420px;
     padding: 10px;
-    margin: auto;
     width: 50%;
     border: 3px solid green;
+    margin: auto 20px auto auto;
 }
 
 .right-block {
@@ -167,6 +167,17 @@ a.homeButton {
     padding: 15px 10px;
 
 }
+
+.nutrition-box {
+    position: absolute;
+    left: 150px;
+    height: 43%;
+    display: inline-block;
+    border: 3px solid green;
+    width: 25%;
+}
+
+
 
 .backButton {
     border-width: 10x;
