@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -149,22 +150,26 @@ public class ProfilePageController {
     }
 
     @PostMapping("/profile/changepassword")
-    public String changePassword(@ModelAttribute("passwordDAO") PasswordDAO user,
-                                 @RequestParam("password") String password,
-                                 @RequestParam("oldpassword") String oldPassword,
-                                 @ModelAttribute("currentUser") User userPass, Principal principal) {
+    public String changePassword(@ModelAttribute("passwordDAO") PasswordDAO user, @RequestParam("password") String password,
+                                 @RequestParam("oldpassword") String oldPassword, @ModelAttribute("currentUser") User userPass, Principal principal,
+                                 RedirectAttributes redirectAttributes) {
 
         String username = principal.getName();
         User existingUser = userRepository.findByUsername(username);
+        redirectAttributes.addFlashAttribute("message", "Password change successful");
+        redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 
+        redirectAttributes.addFlashAttribute("message", "Old password is incorrect.");
+        redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
 
         if (userService.checkOldPasswordMatches(existingUser, oldPassword)) {
             userService.changePassword(user, password, existingUser);
-        } else {
-            throw new RuntimeException( oldPassword + " does not match " + existingUser.getPassword());
+            return "redirect:/profile";
         }
 
-        return "changePassword";
+
+
+        return "changepassword";
     }
 
 }
