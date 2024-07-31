@@ -11,7 +11,7 @@
     <p>An App to keep your friends accountable</p>
 
     <a class="loginButton" href="http://localhost:8080/login">
-        <div sec:authorize="isAuthenticated()" th:action="@{/logout}">
+        <div sec:authorize="isAuthenticated()" th:href="@{/logout}">
             Log Out
         </div>
         <div sec:authorize="!isAuthenticated()">

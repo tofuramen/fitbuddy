@@ -43,6 +43,7 @@ public class ProfilePageController {
 
     @RequestMapping(value ="/profile", method = RequestMethod.GET)
     public String profile(Model model, Principal principal, Nutrition nutrition) {
+
         String username = principal.getName();
         User user = userRepository.findByUsername(username);
         int id = user.getId();
