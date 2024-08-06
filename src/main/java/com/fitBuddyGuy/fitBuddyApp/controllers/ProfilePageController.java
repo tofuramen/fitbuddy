@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
+
 @Controller
 public class ProfilePageController {
 
@@ -123,7 +124,7 @@ public class ProfilePageController {
 
 
         if (result.hasErrors()) {
-            throw new RuntimeException("form is not validating.");
+            return "editprofile";
         }
 
         else {
@@ -165,5 +166,7 @@ public class ProfilePageController {
 
         return "changepassword";
     }
+
+
 
 }
