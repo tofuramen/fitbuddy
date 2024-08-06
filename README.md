@@ -9,3 +9,4 @@ Things I have to fix in Fitbuddy App
 7. Add search and find friends functionality
 8. Add password change functionality. Enter user email. 
 
+![image](https://github.com/user-attachments/assets/f3db53b8-e4a5-4b56-a21f-7fc25c9ab2f1)
