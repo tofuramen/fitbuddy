@@ -1,4 +1,4 @@
-Things I have to fix in Fitbuddy App
+Things I have to fix in Fitbuddy App:
 
 1. Fix up the confirmation Page
 2. If they enter a non integer in the calorie box, error handling
