@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="css/stylesheet.css" th:href="@{/css/stylesheet.css}" type="text/css">
+<meta name="viewport" content="width=device-width"/>
+<head>
+    <title>Weight Graph</title>
+</head>
+
+<div class="header">
+    <h1>My FitBuddy</h1>
+
+
+    <a class="homeButton" href="http://localhost:8080/">
+        Home
+    </a>
+
+    <a class="backButton" href="http://localhost:8080/profile">
+        Back
+    </a>
+
+</div>
+
+<body>
+
+
+
+<div id="container" style="height: 50%">
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div class="weightLineGraph">
+<script th:inline="javascript">
+
+    Highcharts.chart('container', {
+
+        title: {
+            text: 'User Weight',
+            align: 'left'
+        },
+
+        subtitle: {
+            text: 'Weight change over last 6 months',
+            align: 'left'
+        },
+
+        yAxis: {
+            title: {
+                text: 'Weight Over Time'
+            }
+        },
+
+        xAxis: {
+            type: 'datetime',
+            tickPositioner: function() {
+                var tickPositions = [];
+                Highcharts.each(this.series[0].options.data, function(p, i) {
+                    tickPositions.push(p[0])
+                });
+                return tickPositions;
+            },
+            labels: {
+                formatter: function() {
+                    var value = ((new Date(this.value)).toString().substring(4, 16))
+                    return value;
+                }
+            }
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        plotOptions: {
+            series: {
+                label: {
+                    connectorAllowed: false
+                },
+                pointStart: 2
+            }
+        },
+
+        series: [{
+            name: 'User Weight',
+            data: [
+                43934, 48656, 65165, 81827, 112143, 142383,
+                171533, 165174, 155157, 161454, 154610, 168960, 171558
+            ]
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+
+    });
+    </script>
+
+</div>
+</div>
+
+</body>
+
+</html>

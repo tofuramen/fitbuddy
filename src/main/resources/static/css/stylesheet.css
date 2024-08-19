@@ -170,8 +170,8 @@ a.homeButton {
 
 .nutrition-box {
     position: absolute;
-    left: 150px;
-    height: 43%;
+    left: 40%;
+    height: fit-content;
     display: inline-block;
     border: 3px solid green;
     width: 25%;
@@ -216,6 +216,12 @@ a.homeButton {
 }
 
 .user_info {
+
+
+}
+
+.user_weightGraph {
+
 
 
 }

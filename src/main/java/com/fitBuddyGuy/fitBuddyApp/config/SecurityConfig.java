@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/profile").permitAll()
                         .requestMatchers("/profile/editprofile").permitAll()
                         .requestMatchers("/profile/changepassword").permitAll()
+                        .requestMatchers("/profile/WeightGraph").permitAll()
 
 
                 )

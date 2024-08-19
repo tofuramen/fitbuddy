@@ -15,8 +15,6 @@ public interface NutritionRepository extends JpaRepository<Nutrition, Integer> {
                                          @Param("user_id") int user_id);
 
 
-    //create multiple sql queries. First is to track user's weight over time. For the last 180 days.
-
 
     //Second is to see if user meets calorie goal. This can be a boolean added to each day's entry.
 }
